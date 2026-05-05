@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0a0a0a;
+  --foreground: #00ff9f;
+  --accent: #00d9ff;
+  --terminal-bg: rgba(13, 13, 13, 0.95);
+  --terminal-border: rgba(0, 255, 159, 0.2);
+  --selection: rgba(0, 255, 159, 0.3);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--selection);
+  color: white;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--terminal-border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 159, 0.4);
+}
+
+.terminal-glow {
+  box-shadow: 0 0 40px rgba(0, 255, 159, 0.1);
+}
+
+.command-glow {
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-md bg-black/40;
+  }
 }

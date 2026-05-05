@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Interactive Terminal Portfolio
 
-## Getting Started
+A premium, production-ready terminal-style portfolio built with Next.js 14, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## ✨ Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Real Terminal Experience**: Interactive CLI with command history and auto-focus.
+- **Smart Command Handling**: Supports `cat`, `ls`, `./connect.sh`, and a special AI `ask` command.
+- **Modern UI**: Dark mode hacker aesthetic with glassmorphism, scanline effects, and neon glows.
+- **Responsive**: Works seamlessly on mobile and desktop.
+- **Quick Actions**: One-click command buttons for recruiters.
+- **AI Simulation**: Integrated mock AI assistant to answer questions about the developer.
+- **Framer Motion**: Smooth animations for booting and command output.
+
+## 🧱 Tech Stack
+
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+
+## 🛠️ Setup Instructions
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+3. **Open the app**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 📁 Project Structure
+
+```
+/app
+  ├── layout.tsx       # Root layout & Metadata
+  └── page.tsx         # Home page with Terminal
+/components
+  ├── Terminal.tsx     # Main Terminal logic & UI
+  ├── CommandInput.tsx # Interactive prompt & typing
+  └── CommandHandler.ts# Logic for all CLI commands
+/public                # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project is optimized for **Vercel**. 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push your code to a GitHub repository.
+2. Connect the repository to Vercel.
+3. Deploy with zero configuration.
 
-## Learn More
+## ⌨️ Commands to Try
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `cat about.json` - Learn about Archis
+- `ls skills/` - See technical expertise
+- `cat projects.log` - Check out recent work
+- `ask who is archis?` - Interact with the AI assistant
+- `help` - Show all available commands
+- `clear` - Reset the terminal
