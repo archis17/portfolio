@@ -13,18 +13,19 @@ export async function POST(req: Request) {
 
     // Simple intelligent mock logic
     if (q.includes('who') || q.includes('archis')) {
-      answer = "Archis Kulkarni is a highly skilled AI Engineer and Full Stack Developer with 1-3 years of experience. He focuses on GenAI, Agentic AI, and RAG systems.";
+      answer = "Archis Kulkarni is a Full Stack & AI Developer based in Mumbai. He specializes in building agentic workflows and multi-agent autonomous platforms.";
     } else if (q.includes('skill') || q.includes('stack') || q.includes('tech')) {
-      answer = "Archis specializes in Next.js, TypeScript, FastAPI, and LangChain. He's also proficient with Vector Databases like Pinecone and Milvus.";
+      answer = "Archis is proficient in JavaScript, TypeScript, Python, and SQL. His framework expertise includes React, Next.js, FastAPI, and LangGraph.";
     } else if (q.includes('build') || q.includes('project')) {
-      answer = "He has built impressive projects like an AI RAG Chatbot, MasterSync (data engine), and Baller AI (sports analytics). Check them out using 'cat projects.log'!";
+      answer = "He has built innovative projects like MasterSync (a Rust-based serverless ecosystem) and BallerAI (a specialized RAG pipeline for cricket stats).";
     } else if (q.includes('cricket')) {
-      answer = "Oh, don't get him started on cricket! 🏏 He's a huge fan and could talk about it all day.";
-    } else if (q.includes('job') || q.includes('hire') || q.includes('work')) {
-      answer = "Archis is currently open to new opportunities! He brings a unique blend of AI expertise and full-stack development skills.";
+      answer = "Archis is a huge cricket fan! He even built BallerAI, which uses RAG to query over 100K+ granular cricket data points. 🏏";
+    } else if (q.includes('job') || q.includes('hire') || q.includes('work') || q.includes('intern')) {
+      answer = "Archis has experience as a Full Stack & AI Intern at Real Value Infospace LLP and a Full Stack Developer Intern at Horizon View. He is open to new opportunities!";
     } else {
-      answer = "That's a great question! Based on my data, Archis is a passionate developer who loves solving complex problems with AI and modern web tech.";
+      answer = "Archis is a passionate developer focused on GenAI and high-performance RAG pipelines. Feel free to explore his resume or projects!";
     }
+
 
     return NextResponse.json({ answer });
   } catch (error) {
