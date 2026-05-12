@@ -1,6 +1,6 @@
 export type CommandResponse = {
-  output: string | string[] | any;
-  type: 'text' | 'json' | 'error' | 'list' | 'success';
+  output: any;
+  type: 'text' | 'json' | 'error' | 'list' | 'success' | 'projects' | 'connect';
 };
 
 export const COMMANDS = {
@@ -65,12 +65,20 @@ const PROJECTS_DATA = [
   { 
     name: "MasterSync", 
     desc: "Serverless continuity ecosystem using Rust and Tokio for secure, cloud-free data exchange and clipboard sync.",
-    stack: ["Rust (Tauri)", "Tokio", "Kotlin", "Next.js", "SQLite"]
+    stack: ["Rust (Tauri)", "Tokio", "Kotlin", "Next.js", "SQLite"],
+    links: {
+      github: "https://github.com/archis17/mastersync",
+      demo: "https://mastersync.archis.dev"
+    }
   },
   { 
     name: "BallerAI", 
     desc: "Specialized RAG pipeline enabling natural language queries over 100K+ granular cricket data points.",
-    stack: ["Next.js 15", "TypeScript", "PostgreSQL", "Prisma", "Three.js", "RAG"]
+    stack: ["Next.js 15", "TypeScript", "PostgreSQL", "Prisma", "Three.js", "RAG"],
+    links: {
+      github: "https://github.com/archis17/ballerai",
+      demo: "https://ballerai.archis.dev"
+    }
   }
 ];
 
@@ -84,13 +92,13 @@ const STACK_CONTENT = `
 - **Cloud/DevOps**: AWS, Docker, Vercel, Git
 `;
 
-const CONNECT_DATA = {
-  LinkedIn: "https://linkedin.com/in/Archis1708",
-  GitHub: "https://github.com/archis17",
-  Email: "archiskulkarni41762@gmail.com",
-  Phone: "86889884275",
-  Location: "Mumbai, Maharashtra"
-};
+const CONNECT_DATA = [
+  { label: "LinkedIn", value: "https://www.linkedin.com/in/archis-kulkarni-ab98a6290/", url: "https://www.linkedin.com/in/archis-kulkarni-ab98a6290/", type: "linkedin" },
+  { label: "GitHub", value: "github.com/archis17", url: "https://github.com/archis17", type: "github" },
+  { label: "Email", value: "archiskulkarni41762@gmail.com", url: "mailto:archiskulkarni41762@gmail.com", type: "email" },
+  { label: "Phone", value: "+91 86889884275", url: "tel:+9186889884275", type: "phone" },
+  { label: "Location", value: "Mumbai, Maharashtra", url: "https://maps.google.com/?q=Mumbai", type: "location" }
+];
 
 
 export const handleCommand = async (command: string): Promise<CommandResponse> => {
@@ -112,10 +120,10 @@ export const handleCommand = async (command: string): Promise<CommandResponse> =
       return { output: STACK_CONTENT, type: 'text' };
 
     case COMMANDS.PROJECTS:
-      return { output: PROJECTS_DATA.map(p => `${p.name}: ${p.desc} [${p.stack.join(', ')}]`), type: 'text' };
+      return { output: PROJECTS_DATA, type: 'projects' };
 
     case COMMANDS.CONNECT:
-      return { output: CONNECT_DATA, type: 'json' };
+      return { output: CONNECT_DATA, type: 'connect' };
 
     case COMMANDS.HELP:
       return { 

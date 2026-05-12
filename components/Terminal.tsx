@@ -4,9 +4,56 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Terminal as TerminalIcon, X, Minus, Square } from 'lucide-react';
+import { 
+  Terminal as TerminalIcon, 
+  X, 
+  Minus, 
+  Square, 
+  Mail, 
+  Phone, 
+  MapPin, 
+  ExternalLink, 
+  Code, 
+  Globe,
+  ChevronRight
+} from 'lucide-react';
 import CommandInput from './CommandInput';
 import { handleCommand, CommandResponse, COMMANDS } from './CommandHandler';
+
+// Custom Brand Icons as lucide-react v1.x removed them
+const GithubIcon = ({ size = 18, className = "" }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+  </svg>
+);
+
+const LinkedinIcon = ({ size = 18, className = "" }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+    <rect x="2" y="9" width="4" height="12"></rect>
+    <circle cx="4" cy="4" r="2"></circle>
+  </svg>
+);
 
 interface HistoryItem {
   command: string;
@@ -37,10 +84,12 @@ const Terminal: React.FC = () => {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isBooting, setIsBooting] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const prompt = "archis@portfolio:~$";
 
   useEffect(() => {
+    setMounted(true);
     const timer = setTimeout(() => {
       setIsBooting(false);
       executeCommand('help');
@@ -113,6 +162,111 @@ const Terminal: React.FC = () => {
       );
     }
 
+    if (type === 'projects') {
+      return (
+        <div className="grid grid-cols-1 gap-4 mt-2 ml-4 max-w-2xl">
+          {output.map((project: any, i: number) => (
+            <motion.div 
+              key={project.name}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="group/card relative border border-[#00ff9f]/20 p-4 rounded-xl glass-card overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-3 opacity-10 group-hover/card:opacity-30 transition-opacity">
+                <Code size={40} className="text-[#00ff9f]" />
+              </div>
+              
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-[#00ff9f] font-bold text-lg flex items-center">
+                  <span className="w-2 h-2 bg-[#00ff9f] rounded-full mr-3 animate-pulse shadow-[0_0_8px_#00ff9f]" />
+                  {project.name}
+                </h3>
+              </div>
+              
+              <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                {project.desc}
+              </p>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.stack.map((tech: string) => (
+                  <span key={tech} className="text-[10px] px-2 py-0.5 rounded-full bg-[#00ff9f]/5 border border-[#00ff9f]/20 text-[#00ff9f]/80">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              
+              <div className="flex gap-4">
+                {project.links.github && (
+                  <a 
+                    href={project.links.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-xs text-gray-400 hover:text-[#00ff9f] transition-colors"
+                  >
+                    <GithubIcon size={14} /> Source
+                  </a>
+                )}
+                {project.links.demo && (
+                  <a 
+                    href={project.links.demo} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-xs text-gray-400 hover:text-[#00d9ff] transition-colors"
+                  >
+                    <Globe size={14} /> Live Demo
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      );
+    }
+
+    if (type === 'connect') {
+      const getIcon = (type: string) => {
+        switch (type) {
+          case 'github': return <GithubIcon size={18} />;
+          case 'linkedin': return <LinkedinIcon size={18} />;
+          case 'email': return <Mail size={18} />;
+          case 'phone': return <Phone size={18} />;
+          case 'location': return <MapPin size={18} />;
+          default: return <ExternalLink size={18} />;
+        }
+      };
+
+      return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 ml-4 max-w-xl">
+          {output.map((link: any, i: number) => (
+            <motion.a
+              key={link.label}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="flex items-center gap-4 p-3 rounded-lg border border-white/5 bg-white/[0.03] hover:bg-[#00ff9f]/5 hover:border-[#00ff9f]/30 group/link transition-all"
+            >
+              <div className="text-gray-500 group-hover/link:text-[#00ff9f] transition-colors">
+                {getIcon(link.type)}
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-gray-600 group-hover/link:text-[#00ff9f]/50 transition-colors">
+                  {link.label}
+                </div>
+                <div className="text-sm text-gray-300 group-hover/link:text-white transition-colors">
+                  {link.value}
+                </div>
+              </div>
+              <ChevronRight size={14} className="ml-auto opacity-0 group-hover/link:opacity-100 text-[#00ff9f] transform translate-x-[-10px] group-hover/link:translate-x-0 transition-all" />
+            </motion.a>
+          ))}
+        </div>
+      );
+    }
+
     if (Array.isArray(output)) {
       return (
         <div className="mt-1 ml-4 space-y-0.5">
@@ -161,7 +315,7 @@ const Terminal: React.FC = () => {
           </div>
         </div>
         <div className="text-[10px] font-mono text-gray-600 hidden sm:block">
-          {new Date().toLocaleTimeString()} | 127.0.0.1
+          {mounted ? new Date().toLocaleTimeString() : '--:--:--'} | 127.0.0.1
         </div>
       </div>
 
